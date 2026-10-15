@@ -32,9 +32,7 @@ Firefox 140 or newer.
 
 - **Try it (temporary):** open `about:debugging` → *This Firefox* → *Load Temporary Add-on…* and pick
   `manifest.json` from this folder. It stays until Firefox is closed.
-- **Keep it:** Firefox only keeps add-ons that Mozilla has signed. Build the zip (below), then submit it at
-  <https://addons.mozilla.org/developers/> as **"On your own"** (unlisted). It is free, signing is automatic,
-  and you get back a signed `.xpi` to install permanently.
+- **Firefox Add-ons store:** coming soon.
 
 ### As a userscript (works next to uBlock Origin)
 
