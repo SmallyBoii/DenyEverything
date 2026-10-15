@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Notice with only an accept button</title>
+<style>#n{position:fixed;left:0;right:0;bottom:0;background:#333;color:#fff;padding:14px;z-index:9999}</style></head><body>
+<h1>Page</h1>
+<div id="n"><span>We use cookies to ensure you get the best experience on our website.</span> <button id="ok">Got it!</button></div>
+<script>
+const state = window.state = { clicks: 0 };
+document.addEventListener('click', () => { state.clicks++; }, true);
+</script></body></html>

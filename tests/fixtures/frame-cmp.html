@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>CMP frame</title><style>body{font:14px system-ui;margin:10px}[hidden]{display:none!important}</style></head><body>
+<div id="home"><h2>We value your privacy</h2>
+ <p>We and our partners store cookies and process personal data for ads. You can object to processing based on legitimate interest.</p>
+ <button id="accept">Agree to all</button> <button id="opts">Options</button></div>
+<div id="prefs" hidden>
+ <h2>Your choices</h2>
+ <fieldset><legend>Measure ad performance</legend>
+   <label><input type="radio" name="p1" value="agree" checked> Agree</label>
+   <label><input type="radio" name="p1" value="disagree"> Disagree</label></fieldset>
+ <fieldset><legend>Personalised ads - legitimate interest</legend>
+   <label><input type="radio" name="p2" value="agree" checked> Consent</label>
+   <label><input type="radio" name="p2" value="object"> Object</label></fieldset>
+ <fieldset><legend>Remember</legend><label><input type="checkbox" id="remember" checked> Remember my choice</label></fieldset>
+ <button id="save">Save my choices</button>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const state = window.state = { saved: false, accepted: false };
+Object.defineProperty(state, 'p1', { get: () => document.querySelector('[name=p1]:checked').value, enumerable: true });
+Object.defineProperty(state, 'p2', { get: () => document.querySelector('[name=p2]:checked').value, enumerable: true });
+Object.defineProperty(state, 'remember', { get: () => $('#remember').checked, enumerable: true });
+$('#opts').onclick = () => { $('#home').hidden = true; $('#prefs').hidden = false; };
+$('#accept').onclick = () => { state.accepted = true; $('#home').hidden = true; };
+$('#save').onclick = () => { state.saved = true; $('#prefs').hidden = true; };
+</script></body></html>

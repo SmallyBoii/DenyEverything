@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deny Everything</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../../icons/icon.svg" alt="" width="28" height="28">
+    <h1>Deny Everything</h1>
+  </header>
+
+  <section class="status" id="status" aria-live="polite">
+    <div class="big" id="big">–</div>
+    <div class="small" id="small"></div>
+  </section>
+
+  <label class="row">
+    <span>
+      <strong id="siteLabel">This site</strong>
+      <small>Deny cookie and tracking requests here</small>
+    </span>
+    <input type="checkbox" id="site" role="switch">
+  </label>
+
+  <label class="row">
+    <span>
+      <strong>Everywhere</strong>
+      <small>Master switch for all sites</small>
+    </span>
+    <input type="checkbox" id="all" role="switch">
+  </label>
+
+  <label class="row slim">
+    <span><small>Write what it does to the browser console</small></span>
+    <input type="checkbox" id="debug">
+  </label>
+
+  <footer>
+    <span id="total"></span>
+    <button id="reload" type="button" hidden>Reload page</button>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

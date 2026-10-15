@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Things that must not be touched</title></head><body>
+<h1>Account settings</h1>
+<form id="f"><label><input type="checkbox" checked> Email me about replies</label><br>
+<label><input type="checkbox" checked> Show my profile publicly</label><br>
+<button type="button" id="saveSettings">Save</button> <button type="button">Settings</button></form>
+<footer id="cookie-links"><a href="#" id="cs">Cookie settings</a> | <a href="#">Privacy</a></footer>
+<script>
+const state = window.state = { clicks: 0 };
+document.addEventListener('click', () => { state.clicks++; }, true);
+</script></body></html>

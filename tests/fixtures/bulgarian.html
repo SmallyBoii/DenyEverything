@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="bg"><head><meta charset="utf-8"><title>Bulgarian banner</title>
+<style>#b{position:fixed;left:0;right:0;bottom:0;background:#eee;padding:14px;z-index:9999}</style></head><body>
+<h1>Новини</h1>
+<div id="b"><p>Този сайт използва бисквитки, за да ви показва подходящи реклами.</p>
+ <button id="yes">Приемам всички</button> <button id="no">Отхвърляне на всички</button></div>
+<script>
+const state = window.state = { accepted: false, rejected: false };
+yes.onclick = () => { state.accepted = true; b.hidden = true; };
+no.onclick = () => { state.rejected = true; b.hidden = true; };
+</script></body></html>

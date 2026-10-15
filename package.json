@@ -1,0 +1,20 @@
+{
+  "name": "deny-everything",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Firefox extension that answers cookie banners with a complete no.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/unit/text.test.js && node tests/e2e/run.js",
+    "test:unit": "node tests/unit/text.test.js",
+    "test:e2e": "node tests/e2e/run.js",
+    "lint": "web-ext lint --source-dir . --ignore-files tests tools package.json package-lock.json README.md",
+    "test:userscript": "node tests/e2e/run-userscript.js",
+    "build": "powershell -ExecutionPolicy Bypass -File tools/build.ps1",
+    "build:userscript": "powershell -ExecutionPolicy Bypass -File tools/build-userscript.ps1"
+  },
+  "devDependencies": {
+    "selenium-webdriver": "^4.0.0",
+    "web-ext": "^8.0.0"
+  }
+}

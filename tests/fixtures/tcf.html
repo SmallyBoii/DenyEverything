@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>TCF-style dialog (tabs, lazy content, legitimate interest left ON by "Reject all")</title>
+<style>
+ body{font:15px system-ui;margin:0;padding:20px}
+ #banner,#panel{position:fixed;background:#fff;border:1px solid #888;padding:16px;z-index:9999}
+ #banner{left:0;right:0;bottom:0}
+ #panel{inset:4%;overflow:auto}
+ [hidden]{display:none!important}
+ [role=switch]{width:40px;height:22px;border-radius:11px;border:1px solid #666;background:#ccc}
+ [role=switch][aria-checked=true]{background:#2a7}
+</style></head><body>
+<h1>Article</h1><p>Page content that must never be touched.</p>
+<label><input type="checkbox" id="newsletter" checked> Subscribe me to the newsletter</label>
+
+<div id="banner">
+  <p>We and our 842 partners use cookies and process personal data such as IP addresses for personalised ads, based on your consent and legitimate interest.</p>
+  <button id="accept">Accept all</button>
+  <button id="manage">Manage preferences</button>
+  <button id="rejectTop">Reject all</button>
+</div>
+
+<div id="panel" role="dialog" aria-label="Privacy preferences" hidden>
+  <h2>Privacy preferences</h2>
+  <div role="tablist">
+    <button role="tab" aria-selected="true" data-tab="purposes">Purposes</button>
+    <button role="tab" aria-selected="false" data-tab="li">Legitimate interest</button>
+    <button role="tab" aria-selected="false" data-tab="vendors">Vendors</button>
+  </div>
+  <div id="content"></div>
+  <p><button id="allowAll">Accept all</button> <button id="save">Save &amp; exit</button></p>
+</div>
+
+<script>
+const N = 4;
+const state = window.state = {
+  consent: Array(N).fill(true), li: Array(N).fill(true), vendors: Array(3).fill(true),
+  objectedAll: false, saved: false, acceptedAll: false, rejectedTop: false, newsletterTouched: false
+};
+const $ = (s) => document.querySelector(s);
+const names = ['Store and/or access information on a device', 'Select basic ads', 'Measure ad performance', 'Develop and improve products'];
+let tab = 'purposes';
+
+function render() {
+  const c = $('#content'); c.innerHTML = '';
+  document.querySelectorAll('[role=tab]').forEach(t => t.setAttribute('aria-selected', t.dataset.tab === tab));
+  if (tab === 'purposes') {
+    c.insertAdjacentHTML('beforeend', '<div class="row"><b>Strictly necessary</b> <i>Always active</i> <input type="checkbox" checked disabled></div>');
+    names.forEach((n, i) => {
+      const row = document.createElement('div'); row.className = 'row';
+      row.innerHTML = '<b>' + n + '</b> <button role="switch" aria-checked="' + state.consent[i] + '" aria-label="' + n + '"></button>';
+      row.querySelector('button').onclick = (e) => { state.consent[i] = !state.consent[i]; e.currentTarget.setAttribute('aria-checked', state.consent[i]); };
+      c.appendChild(row);
+    });
+  } else if (tab === 'li') {
+    c.insertAdjacentHTML('beforeend', '<button id="objectAll">Object to all</button>');
+    $('#objectAll').onclick = () => { state.objectedAll = true; state.li.fill(false); render(); };
+    names.forEach((n, i) => {
+      const row = document.createElement('label'); row.style.display = 'block';
+      row.innerHTML = '<input type="checkbox" ' + (state.li[i] ? 'checked' : '') + '> ' + n + ' (legitimate interest)';
+      row.querySelector('input').onchange = (e) => { state.li[i] = e.target.checked; };
+      c.appendChild(row);
+    });
+  } else {
+    ['Partner One', 'Partner Two', 'Partner Three'].forEach((n, i) => {
+      const row = document.createElement('div');
+      row.innerHTML = n + ' <span role="switch" tabindex="0" aria-checked="' + state.vendors[i] + '"></span>';
+      row.querySelector('span').onclick = (e) => { state.vendors[i] = !state.vendors[i]; e.currentTarget.setAttribute('aria-checked', state.vendors[i]); };
+      c.appendChild(row);
+    });
+  }
+}
+document.querySelectorAll('[role=tab]').forEach(t => t.onclick = () => { tab = t.dataset.tab; render(); });
+$('#manage').onclick = () => { $('#panel').hidden = false; render(); };
+$('#accept').onclick = $('#allowAll').onclick = () => { state.acceptedAll = true; state.consent.fill(true); $('#banner').hidden = $('#panel').hidden = true; };
+$('#rejectTop').onclick = () => { state.rejectedTop = true; state.consent.fill(false); $('#banner').hidden = true; };   // leaves li ON, like the real thing
+$('#save').onclick = () => { state.saved = true; $('#banner').hidden = $('#panel').hidden = true; };
+$('#newsletter').onchange = () => { state.newsletterTouched = true; };
+</script></body></html>

@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Plain banner, no preferences screen</title>
+<style>#b{position:fixed;left:0;right:0;bottom:0;background:#eee;padding:14px;z-index:9999}</style></head><body>
+<h1>News</h1><p>Plain article text.</p>
+<div id="b"><p>This website uses cookies to improve your experience and show relevant ads.</p>
+ <button id="yes">Accept all</button> <button id="no">Reject all</button></div>
+<script>
+const state = window.state = { accepted: false, rejected: false };
+document.getElementById('yes').onclick = () => { state.accepted = true; b.hidden = true; };
+document.getElementById('no').onclick = () => { state.rejected = true; b.hidden = true; };
+</script></body></html>

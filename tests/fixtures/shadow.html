@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Usercentrics-style shadow DOM</title></head><body>
+<h1>Blog</h1><p>Content.</p>
+<div id="usercentrics-root"></div>
+<script>
+const host = document.getElementById('usercentrics-root'), root = host.attachShadow({ mode: 'open' });
+root.innerHTML = '<style>.w{position:fixed;left:0;right:0;bottom:0;background:#fff;border:1px solid #666;padding:14px;z-index:99999}[hidden]{display:none!important}</style>' +
+  '<div class="w" id="w"><p>We use cookies and similar technologies. Privacy settings.</p>' +
+  ' <button data-testid="uc-accept-all-button">Accept All</button>' +
+  ' <button data-testid="uc-deny-all-button">Deny</button>' +
+  ' <button data-testid="uc-more-button">More</button>' +
+  ' <div id="prefs" hidden>' +
+  '   <label><input type="checkbox" checked class="c"> Marketing</label>' +
+  '   <label><input type="checkbox" checked class="c"> Functional</label>' +
+  '   <label><input type="checkbox" checked class="li"> Analytics (legitimate interest)</label>' +
+  '   <button data-testid="uc-save-button">Save</button>' +
+  ' </div></div>';
+const q = s => root.querySelector(s);
+const state = window.state = { saved: false, accepted: false, deniedTop: false };
+Object.defineProperty(state, 'on', { get: () => [...root.querySelectorAll('input')].filter(i => i.checked).length, enumerable: true });
+q('[data-testid=uc-more-button]').onclick = () => { q('#prefs').hidden = false; };
+q('[data-testid=uc-accept-all-button]').onclick = () => { state.accepted = true; q('#w').hidden = true; };
+q('[data-testid=uc-deny-all-button]').onclick = () => { state.deniedTop = true; q('#w').hidden = true; };
+q('[data-testid=uc-save-button]').onclick = () => { state.saved = true; q('#w').hidden = true; };
+</script></body></html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>OneTrust-style ids (rule path)</title>
+<style>#onetrust-banner-sdk,#onetrust-pc-sdk{position:fixed;background:#fff;border:1px solid #777;padding:14px;z-index:99999}
+#onetrust-banner-sdk{left:0;right:0;bottom:0}#onetrust-pc-sdk{inset:5%;overflow:auto}</style></head><body>
+<h1>Shop</h1>
+<div id="onetrust-consent-sdk">
+  <div id="onetrust-banner-sdk"><p>We use cookies to personalise content and ads.</p>
+    <button id="onetrust-pc-btn-handler">Cookies Settings</button>
+    <button id="onetrust-reject-all-handler">Reject All</button>
+    <button id="onetrust-accept-btn-handler">Accept All Cookies</button></div>
+  <div id="onetrust-pc-sdk" style="display:none" role="dialog">
+    <h2>Privacy Preference Center</h2>
+    <button class="ot-pc-refuse-all-handler" id="pcReject">Reject All</button>
+    <div><h3>Strictly Necessary Cookies</h3><span>Always Active</span><label class="ot-switch"><input type="checkbox" checked disabled></label></div>
+    <div><h3>Performance Cookies</h3><label class="ot-switch"><input type="checkbox" class="c" checked></label></div>
+    <div><h3>Targeting Cookies</h3><label class="ot-switch"><input type="checkbox" class="c" checked></label></div>
+    <div><h3>Targeting Cookies - Legitimate Interest</h3><label class="ot-switch"><input type="checkbox" class="li" checked></label></div>
+    <button class="save-preference-btn-handler" id="save">Confirm My Choices</button>
+    <button id="accept-recommended-btn-handler">Allow All</button>
+  </div>
+</div>
+<script>
+const $ = s => document.querySelector(s), all = s => [...document.querySelectorAll(s)];
+const state = window.state = { saved: false, acceptedAll: false, rejectedTop: false };
+Object.defineProperty(state, 'consentOn', { get: () => all('.c').filter(i => i.checked).length, enumerable: true });
+Object.defineProperty(state, 'liOn', { get: () => all('.li').filter(i => i.checked).length, enumerable: true });
+$('#onetrust-pc-btn-handler').onclick = () => { $('#onetrust-banner-sdk').style.display = 'none'; $('#onetrust-pc-sdk').style.display = 'block'; };
+$('#onetrust-accept-btn-handler').onclick = $('#accept-recommended-btn-handler').onclick = () => { state.acceptedAll = true; $('#onetrust-consent-sdk').hidden = true; };
+$('#onetrust-reject-all-handler').onclick = () => { state.rejectedTop = true; all('.c').forEach(i => i.checked = false); $('#onetrust-consent-sdk').hidden = true; };
+$('#save').onclick = () => { state.saved = true; $('#onetrust-consent-sdk').hidden = true; };
+</script></body></html>
